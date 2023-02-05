@@ -15,7 +15,7 @@ const MapPage = () => {
   
  <div className="map">
   <div className="menu ">
-    <span><img className="tresbarras " src={Barra} alt="mais"></img></span>
+    <span><img className="tresbarras" src={Barra} alt="mais"></img></span>
     <span><p>BUSLIVE</p></span>
     <span><img className="onibus" src={Logo} alt=""></img></span>
   </div>
