@@ -95,12 +95,12 @@ const MapPage = () => {
     }, [origin, destination]);
   
 
-  const directionsCallback = (React.useCallback(() => {
-    // if (res !== null && res.status === "OK") {
-    //   setResponse(res);
-    // } else {
-    //   console.log(res);
-    // }
+  const directionsCallback = (React.useCallback((res : any) => {
+     if (res !== null && res.status === "OK") {
+       setResponse(res);
+    } else {
+       console.log(res);
+     }
   }, []));
 
   const directionsRendererOptions = React.useMemo<any>(() => {
