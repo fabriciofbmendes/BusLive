@@ -1,11 +1,15 @@
 .map {
   height: 100vh;
+  margin-top: 5%;
 }
 
 .map-marker {
   margin-top: -30px;
 }
 
+.map .menu{
+  margin-top: -5%;
+}
 .address {
   box-sizing: border-box;
   width: 240px;
@@ -64,6 +68,8 @@ main{
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  margin-bottom: 10%;
   
 }
 
@@ -144,4 +150,8 @@ span .tresbarras{
   max-width: 100%;
   max-height: 100%;
   cursor: pointer;
+}
+
+.address{
+  visibility: hidden;
 }
