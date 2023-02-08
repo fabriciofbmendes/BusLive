@@ -1,4 +1,6 @@
 import React from "react";
+import barras from "../images/threebars_106419.svg"
+import LOGO from "../images/onibus.svg"
 import {
   GoogleMap,
   Marker,
@@ -117,30 +119,36 @@ const MapPage = () => {
       >
         <GoogleMap
           onLoad={onMapLoad}
-          mapContainerStyle={{ width: "100%", height: "100%" }}
+          mapContainerStyle={{ width: "100%", height: "100%"}}
           center={position}
           zoom={15}
         >
-          <div className="address">
-            <StandaloneSearchBox
-              onLoad={onLoadA}
-              onPlacesChanged={onPlacesChangedA}
-            >
-              <input
-                className="addressField"
-                placeholder="Digite o endereço inicial"
-              />
-            </StandaloneSearchBox>
-            <StandaloneSearchBox
-              onLoad={onLoadB}
-              onPlacesChanged={onPlacesChangedB}
-            >
-              <input
-                className="addressField"
-                placeholder="Digite o endereço final"
-              />
-            </StandaloneSearchBox>
-            <button onClick={traceRoute}>Traçar rota</button>
+          <div className="menu ">
+                <span><img className="tresbarras " src={barras} alt="mais"></img></span>
+                <span><p>BUSLIVE</p></span>
+                <span><img className="onibus" src={LOGO} alt=""></img></span>
+            
+            <div className="address">
+              <StandaloneSearchBox
+                onLoad={onLoadA}
+                onPlacesChanged={onPlacesChangedA}
+              >
+                <input
+                  className="addressField"
+                  placeholder="Digite o endereço inicial"
+                />
+              </StandaloneSearchBox>
+              <StandaloneSearchBox
+                onLoad={onLoadB}
+                onPlacesChanged={onPlacesChangedB}
+              >
+                <input
+                  className="addressField"
+                  placeholder="Digite o endereço final"
+                />
+              </StandaloneSearchBox>
+              <button onClick={traceRoute}>Traçar rota</button>
+            </div>
           </div>
 
           {!response && pointA && <Marker position={pointA} />}
