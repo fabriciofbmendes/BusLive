@@ -1,5 +1,6 @@
 import React, { useEffect, useState,useRef } from "react";
 import { Pressable,Alert, Linking, Text, View } from "react-native";
+import reload from "./Main";
 import MapView, {
   Callout,
   Marker,
@@ -43,17 +44,13 @@ export default function App() {
   
   const clearMarkers = () => {
       setUserMarkers([]);
-      while(Busmarkers.length){
-        Busmarkers.pop();
-        setBusMarkers([]);
-      }
+      setBusMarkers([]);
   };
 
   const [region, setRegion] = useState<Region>();
 
   const [Bus, setBus] = useState<Bus[]>([]);
 //#endregion
-
   const getCurrentPosition = async () => {
     let { status } = await Location.requestBackgroundPermissionsAsync()
 
@@ -73,19 +70,21 @@ export default function App() {
          latitude
          ,longitude
        }
+       let IsActive = true;
+       let buskey = guidGenerator();
 
       clearMarkers();
       setUserMarkers([marker]);
-      setBus([...Bus]);
-      Bus.forEach(function(bus){
-        let latitude = bus.latitude
-        let longitude = bus.longitude;
-        let busmarker = {
-          latitude,
-          longitude
-        }
-        Busmarkers.push(busmarker)
-      })
+
+      latitude = -21.425400
+      longitude = -45.947900
+
+      let busmarker ={
+        latitude,
+        longitude
+      }
+
+      setBusMarkers([busmarker]);
 
       setRegion({
         latitude,
@@ -93,7 +92,6 @@ export default function App() {
         latitudeDelta: 0.005,
         longitudeDelta: 0.005,
       });
-
     } 
   };
 
@@ -120,7 +118,6 @@ export default function App() {
             }}
           />
         ))}
-
     {Busmarkers.map((marker) => (
           <Marker
             pinColor="green"
