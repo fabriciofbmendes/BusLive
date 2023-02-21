@@ -27,29 +27,21 @@ interface Bus{
   buskey : any;
 }
 
-const initialRegion = {
+let initialRegion = {
   latitude: -21.425300,
   longitude: -45.949712,
-  latitudeDelta: 0.005,
-  longitudeDelta: 0.005,
+  latitudeDelta: 0.05,
+  longitudeDelta: 0.05,
 };
-
 
 export default function App() {
   //#region constantes
-  const mapViewRef = useRef<MapView>(null);
+const mapViewRef = useRef<MapView>(null);
 
-  const [Busmarkers, setBusMarkers] = useState<LatLng[]>([]);
-  const [UserMarkers, setUserMarkers] = useState<LatLng[]>([]);
-  
-  const clearMarkers = () => {
-      setUserMarkers([]);
-      setBusMarkers([]);
-  };
+const [Busmarkers, setBusMarkers] = useState<LatLng[]>([]);
+const [UserMarkers, setUserMarkers] = useState<LatLng[]>([]);
+const [region, setRegion] = useState<Region>();
 
-  const [region, setRegion] = useState<Region>();
-
-  const [Bus, setBus] = useState<Bus[]>([]);
 //#endregion
   const getCurrentPosition = async () => {
     let { status } = await Location.requestBackgroundPermissionsAsync()
@@ -57,41 +49,42 @@ export default function App() {
     if (status !== "granted") {
       Alert.alert("Ops!", "Permissão de acesso a localização negada.");
     }
-
-    let {
-      coords: { latitude, longitude },
-    } = await Location.getCurrentPositionAsync();
-
-    setRegion({ latitude, longitude, latitudeDelta: 0.005, longitudeDelta: 0.005 });
+    const clearMarkers = () => {
+      setUserMarkers([]);
+      setBusMarkers([]);
+    };
 
     if(status == "granted"){  
+      let {
+        coords: { latitude, longitude },
+      } = await Location.getCurrentPositionAsync();
+
+      setRegion({ latitude, longitude, latitudeDelta: 0.005, longitudeDelta: 0.005 });
+
+      clearMarkers();
 
       let marker = {
          latitude
          ,longitude
        }
-       let IsActive = true;
-       let buskey = guidGenerator();
-
-      clearMarkers();
+       
       setUserMarkers([marker]);
+      let bool = 0;
 
-      latitude = -21.425400
-      longitude = -45.947900
-
-      let busmarker ={
-        latitude,
-        longitude
+      if(bool == 1 ){
+        
+        latitude = -21.429800
+        longitude = -45.949800
+  
+        let busmarker ={
+          latitude,
+          longitude
+        } 
+        
+        setRegion({ latitude, longitude, latitudeDelta: 0.005, longitudeDelta: 0.005 });
+  
+        setBusMarkers([busmarker]);
       }
-
-      setBusMarkers([busmarker]);
-
-      setRegion({
-        latitude,
-        longitude,
-        latitudeDelta: 0.005,
-        longitudeDelta: 0.005,
-      });
     } 
   };
 
@@ -105,8 +98,8 @@ export default function App() {
         ref={mapViewRef}
         provider={PROVIDER_GOOGLE}
         style={styles.map}
-        region={region}
         initialRegion={initialRegion}
+        region={region}
       >
       {UserMarkers.map((marker) => (
           <Marker
@@ -120,7 +113,8 @@ export default function App() {
         ))}
     {Busmarkers.map((marker) => (
           <Marker
-            pinColor="green"
+          tracksViewChanges={true}
+            image={require("./imagens/MarkerOnibusFinal.png")}
             key={guidGenerator()}
             coordinate={{
               latitude: marker.latitude,
