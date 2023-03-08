@@ -1,5 +1,6 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Pressable,Alert, Linking, Text, View } from "react-native";
+import Dropdown from "./componentes"
 import reload from "./Main";
 import MapView, {
   Callout,
@@ -69,7 +70,7 @@ const [region, setRegion] = useState<Region>();
        }
        
       setUserMarkers([marker]);
-      let bool = 0;
+      let bool = 1;
 
       if(bool == 1 ){
         
@@ -92,8 +93,10 @@ const [region, setRegion] = useState<Region>();
     getCurrentPosition();
   }, []);
 
+
   return (
     <View style={styles.container}>
+
       <MapView
         ref={mapViewRef}
         provider={PROVIDER_GOOGLE}
@@ -101,6 +104,7 @@ const [region, setRegion] = useState<Region>();
         initialRegion={initialRegion}
         region={region}
       >
+        
       {UserMarkers.map((marker) => (
           <Marker
           pinColor="Red"
@@ -111,6 +115,7 @@ const [region, setRegion] = useState<Region>();
             }}
           />
         ))}
+        
     {Busmarkers.map((marker) => (
           <Marker
           tracksViewChanges={true}
@@ -123,6 +128,6 @@ const [region, setRegion] = useState<Region>();
           />
         ))}
       </MapView>
+      <Dropdown/>
     </View>
-  );
-}
+  )}
