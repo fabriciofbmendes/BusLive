@@ -103,6 +103,7 @@ const [region, setRegion] = useState<Region>();
         style={styles.map}
         initialRegion={initialRegion}
         region={region}
+        showsMyLocationButton={true}
       >
         
       {UserMarkers.map((marker) => (
