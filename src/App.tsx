@@ -13,6 +13,7 @@ import MapView, {
 import { RectButton, TextInput } from "react-native-gesture-handler";
 import * as Location from "expo-location";
 import styles from "./styles";
+import { StatusBar } from "expo-status-bar";
 
 function guidGenerator(){
   var S4 = function(){
@@ -128,6 +129,7 @@ const [region, setRegion] = useState<Region>();
           />
         ))}
       </MapView>
+      <StatusBar hidden={true}/>
       <Dropdown/>
     </View>
   )}

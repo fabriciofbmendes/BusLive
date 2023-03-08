@@ -4,7 +4,7 @@ import { View as Drop, Text } from "react-native";
 import styles from "./SearchBar";
 
 const Dropdown = () => {
-  const [selectedValue, setSelectedValue] = useState("");
+  const [selectedValue="Selecione uma rota", setSelectedValue] = useState("");
 
   const handleChange = (event:any) => {
     setSelectedValue(event.target.value);
@@ -13,10 +13,10 @@ const Dropdown = () => {
   return (
     <Drop style={styles.container}>
       <Text >Select an option</Text>
-      <Picker  selectedValue={selectedValue} onValueChange={handleChange}>
-        <Picker.Item label="Option 1" value="option1" />
-        <Picker.Item label="Option 2" value="option2" />
-        <Picker.Item label="Option 3" value="option3" />
+      <Picker  style={styles.option_container} selectedValue={selectedValue} onValueChange={handleChange}>
+        <Picker.Item style={styles.option_container} label="Morada do Sol" value="option1" />
+        <Picker.Item style={styles.option_container} label="Jardim Alvorada" value="option2" />
+        <Picker.Item style={styles.option_container} label="Vista Grande" value="option3" />
       </Picker>
       </Drop>
   );
