@@ -7,7 +7,7 @@ const Dropdown = () => {
   const [selectedValue="Selecione uma rota", setSelectedValue] = useState("");
 
   const handleChange = (event:any) => {
-    setSelectedValue(event.target.value);
+    setSelectedValue(event);
   };
 
   return (
