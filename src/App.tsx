@@ -130,7 +130,7 @@ const [region, setRegion] = useState<Region>();
           />
         ))}
       </MapView>
-      <StatusBar hidden={true}/>
+      {/* <StatusBar hidden={true}/> */}
       <Dropdown/>
     </View>
   )}
