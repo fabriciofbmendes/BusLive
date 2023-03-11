@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { Pressable,Alert, Linking, Text, View } from "react-native";
 import Dropdown from "./componentes"
 import reload from "./Main";
+import { useTimeout } from './useTimeout';
+
 import MapView, {
   Callout,
   Marker,
@@ -21,6 +23,13 @@ function guidGenerator(){
   };
   return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }
+
+const submit = () => {
+  setTimeout(() => {
+    console.log("teste2")
+}, 5000)
+}
+
 
 interface Bus{
   IsActive : boolean;
@@ -91,7 +100,6 @@ const [region, setRegion] = useState<Region>();
     getCurrentPosition();
   }, []);
 
-
   return (
     <View style={styles.container}>
 
@@ -104,7 +112,8 @@ const [region, setRegion] = useState<Region>();
         showsMyLocationButton={true}
         loadingEnabled={true}
         showsUserLocation={true}
-        onUserLocationChange={()=>{Alert.alert("Se moveu")}}
+        onUserLocationChange={()=>{}}
+        onMapLoaded={submit}
       >
         
       {UserMarkers.map((marker) => (
