@@ -39,15 +39,13 @@ let initialRegion = {
 export default function App() {
   //#region constantes
 const mapViewRef = useRef<MapView>(null);
-
 const [Busmarkers, setBusMarkers] = useState<LatLng[]>([]);
 const [UserMarkers, setUserMarkers] = useState<LatLng[]>([]);
 const [region, setRegion] = useState<Region>();
 
 //#endregion
   const getCurrentPosition = async () => {
-    let { status } = await Location.requestBackgroundPermissionsAsync()
-
+    let { status } = await Location.requestForegroundPermissionsAsync()
     if (status !== "granted") {
       Alert.alert("Ops!", "Permissão de acesso a localização negada.");
     }
@@ -62,7 +60,6 @@ const [region, setRegion] = useState<Region>();
       } = await Location.getCurrentPositionAsync();
 
       setRegion({ latitude, longitude, latitudeDelta: 0.005, longitudeDelta: 0.005 });
-
       clearMarkers();
 
       let marker = {
@@ -70,7 +67,7 @@ const [region, setRegion] = useState<Region>();
          ,longitude
        }
        
-      setUserMarkers([marker]);
+      //setUserMarkers([marker]);
       let bool = 1;
 
       if(bool == 1 ){
@@ -105,6 +102,9 @@ const [region, setRegion] = useState<Region>();
         initialRegion={initialRegion}
         region={region}
         showsMyLocationButton={true}
+        loadingEnabled={true}
+        showsUserLocation={true}
+        onUserLocationChange={()=>{Alert.alert("Se moveu")}}
       >
         
       {UserMarkers.map((marker) => (
