@@ -81,8 +81,8 @@ const [region, setRegion] = useState<Region>();
 
       if(bool == 1 ){
         
-        latitude = -21.429800
-        longitude = -45.949800
+        latitude = -21.427000
+        longitude = -45.947000
   
         let busmarker ={
           latitude,
