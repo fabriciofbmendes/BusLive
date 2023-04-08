@@ -3,6 +3,7 @@ import { Pressable,Alert, Linking, Text, View } from "react-native";
 import Dropdown from "./componentes"
 import reload from "./Main";
 import { useTimeout } from './useTimeout';
+import VehicleLocationService from './VehicleLocationService';
 
 import MapView, {
   Callout,
@@ -29,8 +30,6 @@ const submit = () => {
     console.log("teste2")
 }, 5000)
 }
-
-
 interface Bus{
   IsActive : boolean;
   latitude: number;
@@ -96,9 +95,23 @@ const [region, setRegion] = useState<Region>();
     } 
   };
 
-  useEffect(() => {
-    getCurrentPosition();
-  }, []);
+  const MapScreen = ({ vehicleId}) => {
+    const [vehicleLocation, setVehicleLocation] = useState(null);
+  
+    useEffect(() => {
+      const fetchVehicleLocation = async () => {
+        const location = await VehicleLocationService.getVehicleLocation(vehicleId);
+        setVehicleLocation(location);
+      };
+  
+      fetchVehicleLocation();
+      // Você pode ajustar o intervalo de atualização de acordo com suas necessidades
+      const intervalId = setInterval(fetchVehicleLocation, 5000);
+  
+      return () => {
+        clearInterval(intervalId);
+      };
+    }, [vehicleId]);
 
   return (
     <View style={styles.container}>
