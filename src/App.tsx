@@ -95,23 +95,23 @@ const [region, setRegion] = useState<Region>();
     } 
   };
 
-  const MapScreen = ({ vehicleId}) => {
+  const MapScreen = () => {
     const [vehicleLocation, setVehicleLocation] = useState(null);
   
     useEffect(() => {
-      const fetchVehicleLocation = async () => {
-        const location = await VehicleLocationService.getVehicleLocation(vehicleId);
-        setVehicleLocation(location);
+      // Função assíncrona para buscar a localização do veículo e atualizar o estado
+      const fetchVehicleLocation = async (vehicleId: string) => {
+        try {
+          const response = await VehicleLocationService.getVehicleLocation(vehicleId);
+          setVehicleLocation(response);
+        } catch (error) {
+          console.error('Erro ao buscar localização do veículo:', error);
+        }
       };
   
-      fetchVehicleLocation();
-      // Você pode ajustar o intervalo de atualização de acordo com suas necessidades
-      const intervalId = setInterval(fetchVehicleLocation, 5000);
-  
-      return () => {
-        clearInterval(intervalId);
-      };
-    }, [vehicleId]);
+      // Chama a função para buscar a localização do veículo com o ID desejado
+      fetchVehicleLocation(vehcileid);
+    }, []);
 
   return (
     <View style={styles.container}>
@@ -156,3 +156,4 @@ const [region, setRegion] = useState<Region>();
       <Dropdown/>
     </View>
   )}
+}
