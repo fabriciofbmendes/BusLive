@@ -4,6 +4,7 @@ import Dropdown from "./componentes"
 import reload from "./Main";
 import { useTimeout } from './useTimeout';
 import VehicleLocationService from './VehicleLocationService';
+import Statusbar from "./componentes/statusbar";
 
 import MapView, {
   Callout,
@@ -15,7 +16,8 @@ import MapView, {
 } from "react-native-maps";
 import { RectButton, TextInput } from "react-native-gesture-handler";
 import * as Location from "expo-location";
-import styles from "./styles";
+import styles from "../src/styles";
+import stylinho from "../src/SearchBar"
 import { StatusBar } from "expo-status-bar";
 
 function guidGenerator(){
@@ -95,27 +97,28 @@ const [region, setRegion] = useState<Region>();
     } 
   };
 
-  const MapScreen = ({ vehicleId}) => {
-    const [vehicleLocation, setVehicleLocation] = useState(null);
+  // const MapScreen = ({ vehicleId}) => {
+  //   const [vehicleLocation, setVehicleLocation] = useState(null);
   
-    useEffect(() => {
-      const fetchVehicleLocation = async () => {
-        const location = await VehicleLocationService.getVehicleLocation(vehicleId);
-        setVehicleLocation(location);
-      };
+  //   useEffect(() => {
+  //     const fetchVehicleLocation = async () => {
+  //       const location = await VehicleLocationService.getVehicleLocation(vehicleId);
+  //       setVehicleLocation(location);
+  //     };
   
-      fetchVehicleLocation();
-      // Você pode ajustar o intervalo de atualização de acordo com suas necessidades
-      const intervalId = setInterval(fetchVehicleLocation, 5000);
+  //     fetchVehicleLocation();
+  //     // Você pode ajustar o intervalo de atualização de acordo com suas necessidades
+  //     const intervalId = setInterval(fetchVehicleLocation, 5000);
   
-      return () => {
-        clearInterval(intervalId);
-      };
-    }, [vehicleId]);
+  //     return () => {
+  //       clearInterval(intervalId);
+  //     };
+  //   }, [vehicleId]);
 
   return (
-    <View style={styles.container}>
-
+    <View style={stylinho.content}>
+      <Statusbar/>
+      <Dropdown/>
       <MapView
         ref={mapViewRef}
         provider={PROVIDER_GOOGLE}
@@ -153,6 +156,6 @@ const [region, setRegion] = useState<Region>();
         ))}
       </MapView>
       {/* <StatusBar hidden={true}/> */}
-      <Dropdown/>
+      
     </View>
   )}
