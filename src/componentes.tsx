@@ -1,36 +1,55 @@
 import { View, Text, StyleSheet } from "react-native";
 import styles from "./SearchBar";
 import { Picker } from "@react-native-picker/picker";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 export interface DropdownOptionsProps {
   selectedOption: string | undefined;
   onValueChange: (value: string) => void;
 }
-  const combined={
-    ...styles.content,
-    ...styles.label,
-    ...styles.label,
-  }
 
-  const options : [string,string][] = [
-    ['Morada do Sol',"123"], 
-    ['Pinheirinho',"1234"], 
-    ["Campus","12345"],
-  ];
+const API_URL = 'http://192.168.1.2:3000';
 
-  const Dropdown: React.FC<DropdownOptionsProps> = ({
-    selectedOption,
-    onValueChange,
-  }) => {
+const Dropdown: React.FC<DropdownOptionsProps> = ({
+  selectedOption,
+  onValueChange,
+}) => {
+  const [options, setOptions] = useState<[string, string][]>([]);
+
+  useEffect(() => {
+    const fetchOptions = async () => {
+      try {
+        const items = await getItems();
+        setOptions(items);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchOptions();
+  }, []);
+
+  const getItems = async (): Promise<[string, string][]> => {
+    try {
+      const response = await axios.get(`${API_URL}/api/buses`);
+      return response.data.map((item: any) => [item.rota, item._id]);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  };
+
   return (
     <Picker
-    selectedValue={selectedOption}
-    onValueChange={(value) => onValueChange(value)}>
+      selectedValue={selectedOption}
+      onValueChange={(value) => onValueChange(value)}
+    >
       {options.map((option) => (
         <Picker.Item label={option[0]} value={option[1]} key={option[1]} />
       ))}
     </Picker>
   );
-}
+};
+
 export default Dropdown;
