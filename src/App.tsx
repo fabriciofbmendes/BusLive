@@ -20,6 +20,8 @@ import styles from "../src/styles";
 import stylinho from "../src/SearchBar"
 import { StatusBar } from "expo-status-bar";
 import * as Location from "expo-location";
+import Loading from "./componentes/loading";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 function guidGenerator(){
   var S4 = function(){
@@ -186,56 +188,61 @@ const clearMarkers = () => {
   ];
 
   return (
-    <View style={stylinho.content}>
-      <Statusbar/>
-      <View style={{width:"100%",paddingHorizontal:8,paddingTop:8,position:"absolute",zIndex:100}}>
-        <Dropdown selectedOption={selectedOption} onValueChange={handleValueChange} />
+    <SafeAreaProvider>
+      <View style={stylinho.content}>
+        <Statusbar/>
+        <View style={{width:"100%",paddingHorizontal:8,paddingTop:8,position:"absolute",zIndex:100}}>
+          <Dropdown selectedOption={selectedOption} onValueChange={handleValueChange} />
+        </View>
+        <MapView
+          ref={mapViewRef}
+          provider={PROVIDER_GOOGLE}
+          style={styles.map}
+          initialRegion={initialRegion}
+          region={region}
+          mapPadding={{top: 60, right: 0, bottom: 0, left: 0}}
+          showsIndoorLevelPicker={true}
+          zoomControlEnabled={true}
+          followsUserLocation={true}
+          loadingEnabled={true}
+          showsUserLocation={true}
+          onUserLocationChange={()=>{}}
+          onMapLoaded={submit}
+        >
+          
+        {UserMarkers.map((marker) => (
+            <Marker
+            pinColor="Red"
+              key={guidGenerator()}
+              coordinate={{
+                latitude: marker.latitude,
+                longitude: marker.longitude,
+              }}
+            />
+          ))}
+          
+      {Busmarkers.map((marker) => (
+            <Marker
+            tracksViewChanges={true}
+            pinColor="Red"
+              key={guidGenerator()}
+              coordinate={{
+                latitude: marker.latitude,
+                longitude: marker.longitude,
+              }}
+            />
+          ))}
+          
+        </MapView>
+        
+        <Modal visible={showAlert} onRequestClose={() => {}}>
+          <View style={{flex: 1,width:"100%",alignItems:'center',justifyContent:'center',height:"100%"}}>
+            <Loading></Loading>
+            <Text style={{textAlign:'center'}}>Carregando</Text>
+          </View>
+        </Modal>
+        {/* <StatusBar hidden={true}/> */}
+        
       </View>
-      <MapView
-        ref={mapViewRef}
-        provider={PROVIDER_GOOGLE}
-        style={styles.map}
-        initialRegion={initialRegion}
-        region={region}
-        mapPadding={{top: 60, right: 0, bottom: 0, left: 0}}
-        showsIndoorLevelPicker={true}
-        zoomControlEnabled={true}
-        followsUserLocation={true}
-        loadingEnabled={true}
-        showsUserLocation={true}
-        onUserLocationChange={()=>{}}
-        onMapLoaded={submit}
-      >
-        
-      {UserMarkers.map((marker) => (
-          <Marker
-          pinColor="Red"
-            key={guidGenerator()}
-            coordinate={{
-              latitude: marker.latitude,
-              longitude: marker.longitude,
-            }}
-          />
-        ))}
-        
-    {Busmarkers.map((marker) => (
-          <Marker
-          tracksViewChanges={true}
-          pinColor="Red"
-            key={guidGenerator()}
-            coordinate={{
-              latitude: marker.latitude,
-              longitude: marker.longitude,
-            }}
-          />
-        ))}
-        
-      </MapView>
-      
-      <Modal visible={showAlert} onRequestClose={() => {}}>
-         <Text>Estamos buscando a informação do seu ônibus</Text>
-       </Modal>
-      {/* <StatusBar hidden={true}/> */}
-      
-    </View>
+    </SafeAreaProvider>
   )}
