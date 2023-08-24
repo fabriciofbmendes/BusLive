@@ -42,6 +42,8 @@ const Dropdown: React.FC<DropdownOptionsProps> = ({
 
   return (
     <Picker
+      style={{width:"100%",backgroundColor:'#FFF',opacity:.9,borderWidth: 1, borderColor: 'gray'}}
+      itemStyle={{borderWidth:10,borderColor:'red'}}
       selectedValue={selectedOption}
       onValueChange={(value) => onValueChange(value)}
     >

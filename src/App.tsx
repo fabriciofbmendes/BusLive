@@ -4,7 +4,7 @@ import Dropdown, { DropdownOptionsProps } from "./componentes"
 import reload from "./Main";
 import { useTimeout } from './useTimeout';
 import VehicleLocationService from './VehicleLocationService';
-import Statusbar from "./componentes/statusbar";
+import Statusbar from "./componentes/statusbar"
 import {getVehicleLocation} from "../src/TCC/BusApi";
 import MapView, {
   Callout,
@@ -178,17 +178,29 @@ const clearMarkers = () => {
     return () => clearInterval(intervalId);
   }, [selectedOption,vehicleLocation]);
 
+  const [open, setOpen] = useState(false);
+  const actions = [
+    { icon: 'favorite', label: 'Like', onPress: () => console.log('Like') },
+    { icon: 'share', label: 'Share', onPress: () => console.log('Share') },
+    { icon: 'edit', label: 'Edit', onPress: () => console.log('Edit') },
+  ];
+
   return (
     <View style={stylinho.content}>
       <Statusbar/>
-      <Dropdown selectedOption={selectedOption} onValueChange={handleValueChange}/>
+      <View style={{width:"100%",paddingHorizontal:8,paddingTop:8,position:"absolute",zIndex:100}}>
+        <Dropdown selectedOption={selectedOption} onValueChange={handleValueChange} />
+      </View>
       <MapView
         ref={mapViewRef}
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={initialRegion}
         region={region}
-        showsMyLocationButton={true}
+        mapPadding={{top: 60, right: 0, bottom: 0, left: 0}}
+        showsIndoorLevelPicker={true}
+        zoomControlEnabled={true}
+        followsUserLocation={true}
         loadingEnabled={true}
         showsUserLocation={true}
         onUserLocationChange={()=>{}}
@@ -217,7 +229,9 @@ const clearMarkers = () => {
             }}
           />
         ))}
+        
       </MapView>
+      
       <Modal visible={showAlert} onRequestClose={() => {}}>
          <Text>Estamos buscando a informação do seu ônibus</Text>
        </Modal>
