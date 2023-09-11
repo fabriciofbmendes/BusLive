@@ -199,7 +199,6 @@ const clearMarkers = () => {
           provider={PROVIDER_GOOGLE}
           style={styles.map}
           initialRegion={initialRegion}
-          region={region}
           mapPadding={{top: 60, right: 0, bottom: 0, left: 0}}
           showsIndoorLevelPicker={true}
           zoomControlEnabled={true}
