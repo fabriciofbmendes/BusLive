@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 //const API_URL = 'http://localhost:3000';
-const API_URL = 'http://192.168.1.2:3000';
+const API_URL = 'https://buslive-motorista.onrender.com';
 
 export const getVehicleLocation = async (vehicleId : any) => {
   try {

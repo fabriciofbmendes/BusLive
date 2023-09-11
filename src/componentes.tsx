@@ -9,7 +9,7 @@ export interface DropdownOptionsProps {
   onValueChange: (value: string) => void;
 }
 
-const API_URL = 'http://192.168.1.2:3000';
+const API_URL = 'https://buslive-database-api.onrender.com';
 
 const Dropdown: React.FC<DropdownOptionsProps> = ({
   selectedOption,
